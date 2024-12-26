@@ -1,7 +1,4 @@
-import { useEffect } from "react";
-import { useState } from "react";
-import { BooksCard } from "../books/BooksCard";
-
+import { useEffect, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -12,26 +9,10 @@ import "swiper/css/navigation";
 
 // import required modules
 import { Pagination, Navigation } from "swiper/modules";
+import { BooksCard } from "../books/BooksCard";
 
-const categories = [
-	"Choose a genre",
-	"Business",
-	"Science",
-	"Fiction",
-	"Adventure",
-	"Horror",
-];
-
-export const TopSellers = () => {
+export const RecommendedBooks = () => {
 	const [books, setBooks] = useState([]);
-	const [selectedCategory, setSelectedCategory] = useState("Choose a genre");
-
-	const filteredBooks =
-		selectedCategory === "Choose a genre"
-			? books
-			: books.filter(
-					(book) => book.category === selectedCategory.toLowerCase()
-			  );
 
 	useEffect(() => {
 		const fetchBooks = async () => {
@@ -48,24 +29,8 @@ export const TopSellers = () => {
 	}, []);
 
 	return (
-		<div className="py-10">
-			<h2 className="text-3xl font-semibold mb-6">Top Sellers</h2>
-			{/* Category Filtering */}
-			<div className="mb-8 flex items-center">
-				<select
-					onChange={(e) => setSelectedCategory(e.target.value)}
-					name="category"
-					id="category"
-					className="border bg-[#EAEAEA] border-gray-300 rounded-md px-4 py-2 focus:outline-none"
-				>
-					{categories.map((category) => (
-						<option key={category} value={category}>
-							{category}
-						</option>
-					))}
-				</select>
-			</div>
-
+		<div className="py-16">
+			<h2 className="text-3xl font-semibold mb-6">Recommended For You</h2>
 			<Swiper
 				navigation={true}
 				modules={[Pagination, Navigation]}
@@ -99,8 +64,8 @@ export const TopSellers = () => {
 				}}
 				className="mySwiper"
 			>
-				{filteredBooks.length > 0 &&
-					filteredBooks.map((book) => (
+				{books.length > 0 &&
+					books.slice(10, 20).map((book) => (
 						<SwiperSlide key={book._id}>
 							<BooksCard book={book} />
 						</SwiperSlide>

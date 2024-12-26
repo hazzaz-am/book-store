@@ -1,4 +1,5 @@
 import { Banner } from "./Banner";
+import { RecommendedBooks } from "./RecommendedBooks";
 import { TopSellers } from "./TopSellers";
 
 export const Home = () => {
@@ -6,6 +7,7 @@ export const Home = () => {
 		<>
 			<Banner />
       <TopSellers />
+      <RecommendedBooks />
 		</>
 	);
 };
