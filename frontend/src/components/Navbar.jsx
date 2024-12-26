@@ -9,6 +9,7 @@ import {
 
 import userImg from "../assets/avatar.png";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 // navigation links
 const navigationLinks = [
@@ -20,6 +21,7 @@ const navigationLinks = [
 
 export const Navbar = () => {
 	const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+	const cartItems = useSelector((state) => state.cart.cartItems);
 
 	const currentUser = false;
 
@@ -95,7 +97,9 @@ export const Navbar = () => {
 						className="bg-primary p-1 sm:px-6 flex items-center rounded-sm"
 					>
 						<HiOutlineShoppingCart />
-						<span className="text-sm font-semibold sm:ml-1">0</span>
+						<span className="text-sm font-semibold sm:ml-1">
+							{cartItems.length > 0 ? cartItems.length : 0}
+						</span>
 					</Link>
 				</div>
 			</nav>
