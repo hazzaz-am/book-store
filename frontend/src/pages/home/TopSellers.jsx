@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useState } from "react";
 import { BooksCard } from "../books/BooksCard";
 
@@ -12,6 +11,7 @@ import "swiper/css/navigation";
 
 // import required modules
 import { Pagination, Navigation } from "swiper/modules";
+import { useFetchAllBooksQuery } from "../../redux/booksApi";
 
 const categories = [
 	"Choose a genre",
@@ -23,8 +23,8 @@ const categories = [
 ];
 
 export const TopSellers = () => {
-	const [books, setBooks] = useState([]);
 	const [selectedCategory, setSelectedCategory] = useState("Choose a genre");
+	const { data: books = [] } = useFetchAllBooksQuery();
 
 	const filteredBooks =
 		selectedCategory === "Choose a genre"
@@ -32,20 +32,6 @@ export const TopSellers = () => {
 			: books.filter(
 					(book) => book.category === selectedCategory.toLowerCase()
 			  );
-
-	useEffect(() => {
-		const fetchBooks = async () => {
-			try {
-				const response = await fetch("books.json");
-				const data = await response.json();
-				setBooks(data);
-			} catch (error) {
-				console.error("Error fetching books:", error);
-			}
-		};
-
-		fetchBooks();
-	}, []);
 
 	return (
 		<div className="py-10">

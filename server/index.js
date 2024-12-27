@@ -11,7 +11,7 @@ const port = process.env.PORT || 5000;
 app.use(express.json());
 app.use(
 	cors({
-		origin: ["http://localhost:5173/"],
+		origin: ["http://localhost:5173"],
 		credentials: true,
 	})
 );
@@ -25,7 +25,9 @@ async function main() {
 	await mongoose.connect(process.env.DB_URL);
 
 	app.get("/", (_req, res) => {
-		res.send("Book Store Server is running");
+		res.send({
+			message: "Book Store Server is running",
+		});
 	});
 }
 
