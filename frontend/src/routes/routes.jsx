@@ -7,6 +7,7 @@ import { Register } from "../components/Register";
 import { Cart } from "../pages/books/Cart";
 import { Checkout } from "../pages/books/Checkout";
 import { SingleBook } from "../pages/books/SingleBook";
+import { PrivateRoute } from "./PrivateRoute";
 
 export const router = createBrowserRouter([
 	{
@@ -31,7 +32,11 @@ export const router = createBrowserRouter([
 			},
 			{
 				path: "/checkout",
-				element: <Checkout />,
+				element: (
+					<PrivateRoute>
+						<Checkout />
+					</PrivateRoute>
+				),
 			},
 			{
 				path: "/login",

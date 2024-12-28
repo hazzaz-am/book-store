@@ -1,10 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useAuth } from "../hooks/useAuth";
 
+// component
 export const Login = () => {
 	const [message, setMessage] = useState("");
+	const navigate = useNavigate();
+	const { handleUserSignin, signInWithGoogle } = useAuth();
 
 	const {
 		register,
@@ -13,7 +17,24 @@ export const Login = () => {
 	} = useForm();
 	// console.log("errors", errors.root?.message);
 
-	const onSubmit = (data) => console.log(data);
+	const onSubmit = async (data) => {
+		try {
+			await handleUserSignin(data.email, data.password);
+			alert("User Sign in Successfully");
+		} catch (error) {
+			console.log(error.message);
+			setMessage(error);
+		}
+	};
+
+	const handleGoogleSignin = async () => {
+		try {
+			await signInWithGoogle();
+			navigate("/");
+		} catch (error) {
+			console.log(error.message);
+		}
+	};
 
 	return (
 		<div className="h-[calc(100vh-120px)] flex items-center justify-center">
@@ -52,9 +73,7 @@ export const Login = () => {
 					</div>
 
 					{message && (
-						<p className="text-red-500 text-xs italic mb-3">
-							{message}
-						</p>
+						<p className="text-red-500 text-xs italic mb-3">{message}</p>
 					)}
 
 					<div className="flex flex-wrap space-y-2.5 items-center justify-between">
@@ -74,7 +93,10 @@ export const Login = () => {
 					</Link>
 				</p>
 				<div className="mt-4">
-					<button className="w-full flex flex-wrap gap-1 items-center justify-center bg-secondary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+					<button
+						onClick={handleGoogleSignin}
+						className="w-full flex flex-wrap gap-1 items-center justify-center bg-secondary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+					>
 						<FaGoogle className="mr-2" />
 						Sign in with Google
 					</button>

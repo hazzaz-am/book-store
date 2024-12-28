@@ -2,17 +2,18 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
 
 export const Checkout = () => {
 	const [isChecked, setIsChecked] = useState(false);
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
+		// formState: { errors },
 	} = useForm();
 
 	const cartItems = useSelector((state) => state.cart.cartItems);
-	const currentUser = true;
+	const { currentUser } = useAuth();
 
 	const totalPrice = cartItems
 		.reduce((acc, item) => acc + item.newPrice, 0)
@@ -31,9 +32,9 @@ export const Checkout = () => {
 			},
 			phone: data.phone,
 			cartItemIds: cartItems.map((item) => item?._id),
-      totalPrice: totalPrice,
+			totalPrice: totalPrice,
 		};
-    console.log(newOrder);
+		console.log(newOrder);
 	};
 
 	return (
