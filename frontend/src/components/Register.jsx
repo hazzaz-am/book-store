@@ -3,6 +3,7 @@ import { FaGoogle } from "react-icons/fa";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../hooks/useAuth";
+import toast from "react-hot-toast";
 
 export const Register = () => {
 	const [message, setMessage] = useState("");
@@ -19,9 +20,9 @@ export const Register = () => {
 	const onSubmit = async (data) => {
 		try {
 			await handleUseRegister(data.email, data.password);
-			alert("User Registration Successfully");
+			toast.success("User Registration Successfully");
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 			setMessage(error);
 		}
 	};

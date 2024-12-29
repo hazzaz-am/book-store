@@ -3,6 +3,7 @@ import { FaGoogle } from "react-icons/fa";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../hooks/useAuth";
+import toast from "react-hot-toast";
 
 // component
 export const Login = () => {
@@ -20,7 +21,7 @@ export const Login = () => {
 	const onSubmit = async (data) => {
 		try {
 			await handleUserSignin(data.email, data.password);
-			alert("User Sign in Successfully");
+			toast.success("User Sign in Successfully");
 		} catch (error) {
 			console.log(error.message);
 			setMessage(error);

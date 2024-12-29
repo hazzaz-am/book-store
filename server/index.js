@@ -19,6 +19,8 @@ app.use(
 // routes
 const bookRoutes = require("./src/book/book.route");
 app.use("/api/books", bookRoutes);
+const ordersRoutes = require('./src/order/order.route')
+app.use("/api/orders", ordersRoutes);
 
 // mongodb connection
 async function main() {

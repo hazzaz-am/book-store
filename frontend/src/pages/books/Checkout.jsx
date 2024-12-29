@@ -3,6 +3,9 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
+import { toast } from "react-hot-toast";
+import { useCreateOrderMutation } from "../../redux/features/orders/ordersApi";
+import { PropagateLoader } from "react-spinners";
 
 export const Checkout = () => {
 	const [isChecked, setIsChecked] = useState(false);
@@ -12,6 +15,8 @@ export const Checkout = () => {
 		// formState: { errors },
 	} = useForm();
 
+	const [createOrder, { isLoading }] = useCreateOrderMutation();
+
 	const cartItems = useSelector((state) => state.cart.cartItems);
 	const { currentUser } = useAuth();
 
@@ -19,7 +24,7 @@ export const Checkout = () => {
 		.reduce((acc, item) => acc + item.newPrice, 0)
 		.toFixed(2);
 
-	const onSubmit = (data) => {
+	const onSubmit = async (data) => {
 		console.log(data);
 		const newOrder = {
 			name: data.name,
@@ -34,8 +39,20 @@ export const Checkout = () => {
 			cartItemIds: cartItems.map((item) => item?._id),
 			totalPrice: totalPrice,
 		};
-		console.log(newOrder);
+		try {
+			await createOrder(newOrder).unwrap()
+			 toast.success('Place Order Successfully')
+		} catch (error) {
+			console.error("Error", error);
+			toast.error("Failed to Place an Order");
+		}
 	};
+
+	if (isLoading) {
+		<div className="text-center">
+			<PropagateLoader />
+		</div>;
+	}
 
 	return (
 		<section>

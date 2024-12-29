@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { useFetchBookByIdQuery } from "../../redux/booksApi";
 import { getImageUrls } from "../../utils/imageUrls";
 
 import { FiShoppingCart } from "react-icons/fi";
@@ -7,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/features/cart/cartSlice";
 
 import { PropagateLoader } from "react-spinners";
+import { useFetchBookByIdQuery } from "../../redux/features/books/booksApi";
 
 export const SingleBook = () => {
 	const { id } = useParams();
