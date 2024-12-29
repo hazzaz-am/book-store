@@ -3,6 +3,9 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const bookRoutes = require("./src/book/book.route");
+const ordersRoutes = require("./src/order/order.route");
+const usersRoutes = require("./src/users/user.route");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -17,10 +20,9 @@ app.use(
 );
 
 // routes
-const bookRoutes = require("./src/book/book.route");
 app.use("/api/books", bookRoutes);
-const ordersRoutes = require('./src/order/order.route')
 app.use("/api/orders", ordersRoutes);
+app.use("/api/auth", usersRoutes);
 
 // mongodb connection
 async function main() {
