@@ -23,7 +23,7 @@ export const Register = () => {
 			toast.success("User Registration Successfully");
 		} catch (error) {
 			// console.log(error);
-			setMessage(error);
+			setMessage(error.message);
 		}
 	};
 
@@ -32,7 +32,8 @@ export const Register = () => {
 			await signInWithGoogle();
 			navigate("/");
 		} catch (error) {
-			console.log(error.message);
+			// console.log(error.message);
+			setMessage(error.message);
 		}
 	};
 

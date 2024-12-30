@@ -6,6 +6,7 @@ const cors = require("cors");
 const bookRoutes = require("./src/book/book.route");
 const ordersRoutes = require("./src/order/order.route");
 const usersRoutes = require("./src/users/user.route");
+const adminRoutes = require("./src/stats/admin.stats");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -23,6 +24,7 @@ app.use(
 app.use("/api/books", bookRoutes);
 app.use("/api/orders", ordersRoutes);
 app.use("/api/auth", usersRoutes);
+app.use("/api/admin", adminRoutes);
 
 // mongodb connection
 async function main() {

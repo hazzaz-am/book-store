@@ -23,8 +23,8 @@ export const Login = () => {
 			await handleUserSignin(data.email, data.password);
 			toast.success("User Sign in Successfully");
 		} catch (error) {
-			console.log(error.message);
-			setMessage(error);
+			// console.log(error.message);
+			setMessage(error.message);
 		}
 	};
 
@@ -33,7 +33,8 @@ export const Login = () => {
 			await signInWithGoogle();
 			navigate("/");
 		} catch (error) {
-			console.log(error.message);
+			setMessage(error.message)
+			// console.log(error.message);
 		}
 	};
 
